@@ -5,41 +5,31 @@ import SwiftUI
 import Combine
 
 /// `Koober` is a state store that holds the app's current state. SwiftUI will be notified anytime _anything_ changes in `appState`. This means all the views are recomputed by SwiftUI whenevr anything changes. Recomputing views is supposed to be cheap. **I haven't profiled taking this strategy so your milage may vary.**
-class Koober: BindableObject {
+final class Koober: BindableObject {
   
   /// `Publisher` required by `BindableObject` protocol. This publisher gets sent a new `Void` value anytime `appState` changes.
-  var didChange = PassthroughSubject<Void, Never>()
+  private(set) var didChange = PassthroughSubject<Void, Never>()
   
   /// This is the app's entire state. The SwiftUI view hierarchy is a function of this state.
-  var appState = AppState.launching {
+  private var appState = AppState.launching {
     didSet {
-      self.didChange.send(())
+      didChange.send(())
     }
   }
   
   // MARK: Subsystems
   /// Data store that holds the authenticated user's session. This uses a fake implementation to simulate whether a user is signed when the app launches.
-  let userSessionStore: UserSessionStore = FakeUserSessionStore(userAlreadySignedIn: false)
+  private let userSessionStore: UserSessionStore = FakeUserSessionStore(userAlreadySignedIn: false)
   
   // MARK: Computed properties
   /// Helper computed property used by SwiftUI views.
   var isLaunching: Bool {
-    switch appState {
-    case .launching:
-      return true
-    default:
-      return false
-    }
+    return appState == .launching
   }
   
   /// Helper computed property used by SwiftUI views.
   var userIsAuthenticated: Bool {
-    switch appState {
-    case .running(.authenticated):
-      return true
-    default:
-      return false
-    }
+    return appState == .running(.authenticated)
   }
   
   init() {
@@ -87,7 +77,7 @@ class Koober: BindableObject {
 
 // MARK: - Model
 
-enum AppState {
+enum AppState: Equatable {
   case launching
   case running(UserState)
 }
