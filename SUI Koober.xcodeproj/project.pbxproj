@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9F35695322ADC12E007FA94C /* SignInUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35695222ADC12E007FA94C /* SignInUseCase.swift */; };
+		9F86EE2922B1378600E36C64 /* KooberDependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F86EE2822B1378600E36C64 /* KooberDependencyContainer.swift */; };
 		9F9F397822AC7C0E004D2B76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9F397722AC7C0E004D2B76 /* AppDelegate.swift */; };
 		9F9F397A22AC7C0E004D2B76 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9F397922AC7C0E004D2B76 /* SceneDelegate.swift */; };
 		9F9F397E22AC7C0F004D2B76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F9F397D22AC7C0F004D2B76 /* Assets.xcassets */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		9F35695222ADC12E007FA94C /* SignInUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInUseCase.swift; sourceTree = "<group>"; };
+		9F86EE2822B1378600E36C64 /* KooberDependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KooberDependencyContainer.swift; sourceTree = "<group>"; };
 		9F9F397422AC7C0E004D2B76 /* SUI Koober.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SUI Koober.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F9F397722AC7C0E004D2B76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F9F397922AC7C0E004D2B76 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 			children = (
 				9F9F397722AC7C0E004D2B76 /* AppDelegate.swift */,
 				9F9F397922AC7C0E004D2B76 /* SceneDelegate.swift */,
+				9F86EE2822B1378600E36C64 /* KooberDependencyContainer.swift */,
 				9F9F399F22ADA25E004D2B76 /* Koober.swift */,
 				9F9F399522AC857F004D2B76 /* MainView.swift */,
 				9F9F39A122ADB717004D2B76 /* Launching */,
@@ -249,6 +252,7 @@
 				9F9F399422AC8219004D2B76 /* SignUpView.swift in Sources */,
 				9F9F399E22AC88B1004D2B76 /* OnboardView.swift in Sources */,
 				9F9F399222AC8203004D2B76 /* SignInView.swift in Sources */,
+				9F86EE2922B1378600E36C64 /* KooberDependencyContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

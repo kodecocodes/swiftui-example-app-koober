@@ -17,9 +17,8 @@ final class Koober: BindableObject {
     }
   }
   
-  // MARK: Subsystems
-  /// Data store that holds the authenticated user's session. This uses a fake implementation to simulate whether a user is signed when the app launches.
-  private let userSessionStore: UserSessionStore = FakeUserSessionStore(userAlreadySignedIn: false)
+  // MARK: Dependencies
+  let kooberDependencyContainer = KooberDependencyContainer()
   
   // MARK: Computed properties
   /// Helper computed property used by SwiftUI views.
@@ -42,6 +41,7 @@ final class Koober: BindableObject {
   
   /// Determines if user is signed in when app launches.
   func startLoadUserSessionUseCase() {
+    let userSessionStore = kooberDependencyContainer.userSessionStore
     userSessionStore.getStoredAuthenticatedUserSession() { result in
       switch result {
       case .success(nil):
@@ -59,11 +59,8 @@ final class Koober: BindableObject {
   /// - Parameter username: User provided userename.
   /// - Parameter password: User provided password.
   func startSignInUseCase(username: String, password: String) {
-    let remoteAPI = FakeUserAuthenticationRemoteAPI()
-    let useCase = SignInUseCase(username: username,
-                                password: password,
-                                remoteAPI: remoteAPI,
-                                userSessionStore: self.userSessionStore)
+    let useCase = kooberDependencyContainer
+      .makeSignInUseCase(username: username, password: password)
     useCase.start { result in
       switch result {
       case .success(_):
