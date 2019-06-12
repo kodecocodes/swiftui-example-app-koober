@@ -9,7 +9,8 @@ struct RunningView : View {
   var body: some View {
     VStack {
       if koober.userIsAuthenticated {
-        NewRideView()
+        // TODO: Undo this force unwrap hack.
+        NewRideView(user: koober.authenticatedUser!)
       } else {
         OnboardView(koober: koober)
       }
