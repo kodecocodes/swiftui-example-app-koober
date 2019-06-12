@@ -3,7 +3,7 @@
 import Foundation
 
 /// Root dependency container for Koober which holds objects who live throught the lifetime of Koober's process, i.e. singletons.
-class KooberDependencyContainer {
+final class KooberDependencyContainer {
   // MARK: Subsystems
   /// Data store that holds the authenticated user's session. This uses a fake implementation to simulate whether a user is signed when the app launches.
   let userSessionStore: UserSessionStore = FakeUserSessionStore(userAlreadySignedIn: false)
