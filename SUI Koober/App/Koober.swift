@@ -29,7 +29,7 @@ final class Koober: BindableObject {
   /// Helper computed property used by SwiftUI views.
   var userIsAuthenticated: Bool {
     switch appState {
-    case .running(.authenticated(_)):
+    case .running(.authenticated):
       return true
     default:
       return false
