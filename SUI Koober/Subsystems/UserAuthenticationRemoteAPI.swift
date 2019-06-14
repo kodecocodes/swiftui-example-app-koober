@@ -20,7 +20,7 @@ class FakeUserAuthenticationRemoteAPI: UserAuthenticationRemoteAPI {
     DispatchQueue.global().async {
       sleep(1)
       DispatchQueue.main.async {
-        onComplete(.success(UserSession()))
+        onComplete(.success(UserSession.fake))
       }
     }
   }

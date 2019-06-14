@@ -22,7 +22,7 @@ class FakeUserSessionStore: UserSessionStore {
       sleep(2)
       DispatchQueue.main.async {
         let result: Result<UserSession?, Never> =
-          self.userAlreadySignedIn ? .success(UserSession()) : .success(nil)
+          self.userAlreadySignedIn ? .success(UserSession.fake) : .success(nil)
         onComplete(result)
       }
     }

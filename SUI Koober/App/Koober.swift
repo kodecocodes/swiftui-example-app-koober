@@ -28,7 +28,23 @@ final class Koober: BindableObject {
   
   /// Helper computed property used by SwiftUI views.
   var userIsAuthenticated: Bool {
-    return appState == .running(.authenticated)
+    switch appState {
+    case .running(.authenticated):
+      return true
+    default:
+      return false
+    }
+  }
+  
+  /// Helper computed property for accessing user.
+  /// TODO: Undo this hack once authenticated dependency container is in place.
+  var authenticatedUser: User? {
+    switch appState {
+    case .running(.authenticated(let userSession)):
+      return userSession.user
+    default:
+      return nil
+    }
   }
   
   init() {
@@ -46,14 +62,13 @@ final class Koober: BindableObject {
       switch result {
       case .success(nil):
         self.appState = .running(.unauthenticated)
-      case .success(.some):
-        self.appState = .running(.authenticated)
+      case .success(.some(let userSession)):
+        self.appState = .running(.authenticated(userSession))
       default:
         fatalError()
       }
     }
   }
-  
   
   /// Attempts to sign in a usere with credentials.
   /// - Parameter username: User provided userename.
@@ -63,8 +78,8 @@ final class Koober: BindableObject {
       .makeSignInUseCase(username: username, password: password)
     useCase.start { result in
       switch result {
-      case .success(_):
-        self.appState = .running(.authenticated)
+      case .success(let userSession):
+        self.appState = .running(.authenticated(userSession))
       default:
         fatalError() // **NOTE:** Typically a failure case would need to be handled here. For this prototype, any username/password is accepted.
       }
@@ -80,12 +95,43 @@ enum AppState: Equatable {
 }
 
 /// Represents whether user is signed in or not. In a complete implemnetation, the `authenticated` case would hold a `UserSession` as an associated value.
-enum UserState {
+enum UserState: Equatable {
   case unauthenticated
-  case authenticated
+  case authenticated(UserSession)
 }
 
 /// Placeholder. This type would normally hold the signed in user's information and auth token.
-struct UserSession {
-  
+struct UserSession: Equatable {
+  let user: User
+  let remoteSession: RemoteUserSession
+}
+
+/// User's profile information.
+struct User: Equatable {
+  let displayName: String
+}
+
+/// User's cloud session.
+struct RemoteUserSession: Equatable {
+  let authToken: String
+}
+
+// MARK: Fakes
+
+extension UserSession {
+  static var fake: UserSession {
+    UserSession(user: User.fake, remoteSession: RemoteUserSession.fake)
+  }
+}
+
+extension User {
+  static var fake: User {
+    User(displayName: "Fake User")
+  }
+}
+
+extension RemoteUserSession {
+  static var fake: RemoteUserSession {
+    RemoteUserSession(authToken: "fake-auth-token")
+  }
 }
