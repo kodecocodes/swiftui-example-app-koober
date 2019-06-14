@@ -20,23 +20,32 @@ class SignInUseCase {
     self.userSessionStore = userSessionStore
   }
   
-  func start(onUseCaseComplete: @escaping (Result<UserSession, Never>) -> Void) {
+  func start(onUseCaseComplete: @escaping (Result<UserSession, ErrorMessage>) -> Void) {
     signIn(onUseCaseComplete: onUseCaseComplete)
   }
   
-  func signIn(onUseCaseComplete: @escaping (Result<UserSession, Never>) -> Void) {
+  func signIn(onUseCaseComplete: @escaping (Result<UserSession, ErrorMessage>) -> Void) {
     remoteAPI.signIn(username: username, password: password) { result in
       switch result {
       case .success(let userSession):
         self.store(userSession: userSession, onComplete: onUseCaseComplete)
-      default:
-        fatalError()
+      case .failure(let error):
+        onUseCaseComplete(.failure(error.errorMessage))
       }
     }
   }
   
-  func store(userSession: UserSession, onComplete: @escaping (Result<UserSession, Never>) -> Void) {
-    userSessionStore.store(authenticatedUserSession: userSession,
-                           onComplete: onComplete)
+  func store(userSession: UserSession, onComplete: @escaping (Result<UserSession, ErrorMessage>) -> Void) {
+    userSessionStore.store(authenticatedUserSession: userSession) { result in onComplete(toUseCaseResult(result)) }
   }
 }
+
+private func toUseCaseResult(_ result: Result<UserSession, StoreAuthenticatedUserSessionError>) -> Result<UserSession, ErrorMessage> {
+  switch result {
+  case .success(let userSession):
+    return .success(userSession)
+  case .failure(let error):
+    return .failure(error.errorMessage)
+  }
+}
+

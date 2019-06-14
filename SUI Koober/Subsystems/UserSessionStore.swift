@@ -2,12 +2,27 @@
 
 import Foundation
 
+// MARK: - API
+
 /// Data store for storing the authenticated user's session.
 protocol UserSessionStore {
-  func getStoredAuthenticatedUserSession(onComplete: @escaping (Result<UserSession?, Never>) -> Void)
+  func getStoredAuthenticatedUserSession(onComplete: @escaping (Result<UserSession?, GetStoredAuthenticatedUserSessionError>) -> Void)
   func store(authenticatedUserSession: UserSession,
-             onComplete: @escaping (Result<UserSession, Never>) -> Void)
+             onComplete: @escaping (Result<UserSession, StoreAuthenticatedUserSessionError>) -> Void)
 }
+
+/// Marker protocol.
+protocol UserSessionStoreError: Error, ErrorMessageConvertible {}
+
+enum GetStoredAuthenticatedUserSessionError: UserSessionStoreError {
+  case unknown
+}
+
+enum StoreAuthenticatedUserSessionError: UserSessionStoreError {
+  case unkown
+}
+
+// MARK: - Implementation
 
 /// Fake implementation that's used to simulate whether a user is signed in during launch.
 class FakeUserSessionStore: UserSessionStore {
@@ -17,18 +32,18 @@ class FakeUserSessionStore: UserSessionStore {
     self.userAlreadySignedIn = userAlreadySignedIn
   }
   
-  func getStoredAuthenticatedUserSession(onComplete: @escaping (Result<UserSession?, Never>) -> Void) {
+  func getStoredAuthenticatedUserSession(onComplete: @escaping (Result<UserSession?, GetStoredAuthenticatedUserSessionError>) -> Void) {
     DispatchQueue.global().async {
       sleep(2)
       DispatchQueue.main.async {
-        let result: Result<UserSession?, Never> =
+        let result: Result<UserSession?, GetStoredAuthenticatedUserSessionError> =
           self.userAlreadySignedIn ? .success(UserSession.fake) : .success(nil)
         onComplete(result)
       }
     }
   }
   
-  func store(authenticatedUserSession: UserSession, onComplete: @escaping (Result<UserSession, Never>) -> Void) {
+  func store(authenticatedUserSession: UserSession, onComplete: @escaping (Result<UserSession, StoreAuthenticatedUserSessionError>) -> Void) {
     DispatchQueue.global().async {
       sleep(1) // Simulate save to keycain...
       DispatchQueue.main.async {

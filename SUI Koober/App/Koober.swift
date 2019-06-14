@@ -73,15 +73,15 @@ final class Koober: BindableObject {
   /// Attempts to sign in a usere with credentials.
   /// - Parameter username: User provided userename.
   /// - Parameter password: User provided password.
-  func startSignInUseCase(username: String, password: String) {
+  func startSignInUseCase(username: String, password: String, onError: @escaping (ErrorMessage) -> Void) {
     let useCase = kooberDependencyContainer
       .makeSignInUseCase(username: username, password: password)
     useCase.start { result in
       switch result {
       case .success(let userSession):
         self.appState = .running(.authenticated(userSession))
-      default:
-        fatalError() // **NOTE:** Typically a failure case would need to be handled here. For this prototype, any username/password is accepted.
+      case .failure(let errorMessage):
+        onError(errorMessage)
       }
     }
   }
@@ -116,6 +116,21 @@ struct RemoteUserSession: Equatable {
   let authToken: String
 }
 
+struct ErrorMessage: Identifiable, Error {
+  let id = UUID()
+  var message: String
+}
+
+protocol ErrorMessageConvertible {
+  var errorMessage: ErrorMessage { get }
+}
+
+extension ErrorMessageConvertible {
+  var errorMessage: ErrorMessage {
+    ErrorMessage(message: "Uknown error. Please try again.")
+  }
+}
+
 // MARK: Fakes
 
 extension UserSession {
@@ -135,3 +150,4 @@ extension RemoteUserSession {
     RemoteUserSession(authToken: "fake-auth-token")
   }
 }
+
