@@ -7,29 +7,14 @@ struct WelcomeView : View {
   @ObjectBinding var koober: Koober
   
   var body: some View {
-      VStack {
-          NavigationView {
-            VStack {
-                Image("roo_logo")
-                    .background(Color("BackgroundColor"))
-                    HStack {
-                      NavigationButton(destination: SignInView(startSignInUseCase: koober.startSignInUseCase)) {
-                          Text("Sign In")
-                        }
-                        .accentColor(.white)
-                        .padding()
-                      
-                        Spacer()
-                        NavigationButton(destination: SignUpView()) {
-                            Text("Sign Up")
-                        }
-                        .accentColor(.white)
-                        .padding()
-                }
-            }
-            .background(Color("BackgroundColor"))
-        }
-  }
+    VStack {
+      Spacer()
+      WelcomeContentView(koober: koober)
+      Spacer()
+    }
+    .background(Color("BackgroundColor"))
+    .edgesIgnoringSafeArea(.bottom)
+    .navigationBarTitle(Text("Welcome"))
   }
 }
 
@@ -40,3 +25,37 @@ struct WelcomeView_Previews : PreviewProvider {
   }
 }
 #endif
+
+/// App logo, sign in and sign up buttons.
+private struct WelcomeContentView : View {
+  @ObjectBinding var koober: Koober
+  
+  var body: some View {
+    VStack {
+      Image("roo_logo").background(Color("BackgroundColor"))
+      SignInSignUpButtons(koober: koober)
+    }
+    .background(Color("BackgroundColor"))
+    .padding()
+  }
+}
+
+private struct SignInSignUpButtons : View {
+  @ObjectBinding var koober: Koober
+  
+  var body: some View {
+    HStack {
+      NavigationButton(destination: SignInView(startSignInUseCase: koober.startSignInUseCase)) {
+        Text("Sign In")
+        }
+        .accentColor(.white)
+        .padding()
+      Spacer()
+      NavigationButton(destination: SignUpView()) {
+        Text("Sign Up")
+        }
+        .accentColor(.white)
+        .padding()
+    }
+  }
+}

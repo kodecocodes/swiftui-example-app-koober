@@ -5,10 +5,9 @@ import SwiftUI
 /// This view is presented when a user is not signed in.
 struct OnboardView : View {
   @ObjectBinding var koober: Koober
-  @State private var isSignedIn = false
   
   var body: some View {
-    VStack {
+    NavigationView {
       WelcomeView(koober: koober)
     }
   }
