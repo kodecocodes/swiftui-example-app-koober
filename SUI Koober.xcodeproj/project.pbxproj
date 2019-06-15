@@ -23,6 +23,7 @@
 		9F9F399C22AC86E2004D2B76 /* RunningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9F399B22AC86E2004D2B76 /* RunningView.swift */; };
 		9F9F399E22AC88B1004D2B76 /* OnboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9F399D22AC88B1004D2B76 /* OnboardView.swift */; };
 		9F9F39A022ADA25E004D2B76 /* Koober.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9F399F22ADA25E004D2B76 /* Koober.swift */; };
+		9FAD7ED822B58FF00050A6B8 /* FullscreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAD7ED722B58FF00050A6B8 /* FullscreenView.swift */; };
 		9FE8C31022ADBEB2000F4F50 /* UserSessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE8C30F22ADBEB2000F4F50 /* UserSessionStore.swift */; };
 		9FE8C31222ADBF10000F4F50 /* UserAuthenticationRemoteAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE8C31122ADBF10000F4F50 /* UserAuthenticationRemoteAPI.swift */; };
 /* End PBXBuildFile section */
@@ -46,6 +47,7 @@
 		9F9F399B22AC86E2004D2B76 /* RunningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningView.swift; sourceTree = "<group>"; };
 		9F9F399D22AC88B1004D2B76 /* OnboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardView.swift; sourceTree = "<group>"; };
 		9F9F399F22ADA25E004D2B76 /* Koober.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Koober.swift; sourceTree = "<group>"; };
+		9FAD7ED722B58FF00050A6B8 /* FullscreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenView.swift; sourceTree = "<group>"; };
 		9FE8C30F22ADBEB2000F4F50 /* UserSessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionStore.swift; sourceTree = "<group>"; };
 		9FE8C31122ADBF10000F4F50 /* UserAuthenticationRemoteAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthenticationRemoteAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				9FE8C30D22ADBE83000F4F50 /* App */,
+				9FAD7ED622B58FCD0050A6B8 /* ReusableViews */,
 				9FE8C30E22ADBE92000F4F50 /* Subsystems */,
 				9F35695122ADC114007FA94C /* UseCases */,
 				9F9F397D22AC7C0F004D2B76 /* Assets.xcassets */,
@@ -142,6 +145,14 @@
 				9F9F399722AC85C5004D2B76 /* NewRideView.swift */,
 			);
 			path = NewRide;
+			sourceTree = "<group>";
+		};
+		9FAD7ED622B58FCD0050A6B8 /* ReusableViews */ = {
+			isa = PBXGroup;
+			children = (
+				9FAD7ED722B58FF00050A6B8 /* FullscreenView.swift */,
+			);
+			path = ReusableViews;
 			sourceTree = "<group>";
 		};
 		9FE8C30D22ADBE83000F4F50 /* App */ = {
@@ -251,6 +262,7 @@
 				9FE8C31222ADBF10000F4F50 /* UserAuthenticationRemoteAPI.swift in Sources */,
 				9F9F399422AC8219004D2B76 /* SignUpView.swift in Sources */,
 				9F9F399E22AC88B1004D2B76 /* OnboardView.swift in Sources */,
+				9FAD7ED822B58FF00050A6B8 /* FullscreenView.swift in Sources */,
 				9F9F399222AC8203004D2B76 /* SignInView.swift in Sources */,
 				9F86EE2922B1378600E36C64 /* KooberDependencyContainer.swift in Sources */,
 			);
