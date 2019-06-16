@@ -45,17 +45,20 @@ private struct SignInSignUpButtons : View {
   
   var body: some View {
     HStack {
+      
       NavigationButton(destination: SignInView(startSignInUseCase: koober.startSignInUseCase)) {
         Text("Sign In")
-        }
-        .accentColor(.white)
-        .padding()
+      }
+      .accentColor(.white)
+      .padding()
+      
       Spacer()
+      
       NavigationButton(destination: SignUpView()) {
         Text("Sign Up")
-        }
-        .accentColor(.white)
-        .padding()
+      }
+      .accentColor(.white)
+      .padding()
     }
   }
 }
