@@ -10,37 +10,30 @@ struct SignInView : View {
   
   var body: some View {
     VStack {
-      HStack {
+      FormField($username) {
         Text("Username")
           .color(.white)
           .frame(width: 80)
           .padding()
-        
-        TextField($username)
-          .padding()
-          .background(Color(hue: 1, saturation: 1, brightness: 1, opacity: 0.1))
       }
-      
-      HStack {
+      FormField($password, secure: true) {
         Text("Password")
           .color(.white)
           .frame(width: 80)
           .padding()
-        SecureField($password)
-          .padding()
-          .background(Color(hue: 1, saturation: 1, brightness: 1, opacity: 0.1))
-        
       }
-      
       Button(action: signIn) {
         Text("Sign In")
       }
       .accentColor(.white)
       .padding()
+      
       Spacer()
     }
     .padding()
     .background(Color("BackgroundColor"))
+    .edgesIgnoringSafeArea(.bottom)
+    .navigationBarTitle(Text("Sign In"))
   }
   
   func signIn() {
@@ -51,9 +44,38 @@ struct SignInView : View {
 #if DEBUG
 struct SignInView_Previews : PreviewProvider {
   static var previews: some View {
-    SignInView(startSignInUseCase: { username, password in
-      print("Start sign in use case. \(username):\(password)")
-    })
+    NavigationView{
+      SignInView(startSignInUseCase: { username, password in
+        print("Start sign in use case. \(username):\(password)")
+      })
+    }
   }
 }
 #endif
+
+private struct FormField<Label: View>: View {
+  private var text: Binding<String>
+  let secure: Bool
+  let label: Label
+  
+  init(_ text: Binding<String>, secure: Bool = false, @ViewBuilder label: () -> Label) {
+    self.text = text
+    self.secure = secure
+    self.label = label()
+  }
+  
+  var body: some View {
+    HStack {
+      label
+      if (secure) {
+        SecureField(text)
+          .padding()
+          .background(Color(hue: 1, saturation: 1, brightness: 1, opacity: 0.1))
+      } else {
+        TextField(text)
+          .padding()
+          .background(Color(hue: 1, saturation: 1, brightness: 1, opacity: 0.1))
+      }
+    }
+  }
+}
