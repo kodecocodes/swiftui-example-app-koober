@@ -1,6 +1,7 @@
 /// **NOTE:** This is a quick prototype built to understand SwiftUI. The code was hacked together, some of the code is rough and attempts to simulate side effects. June 9, 2019.
 
 import Foundation
+import Combine
 
 /// Use case for signing in users. Attempts to remotely authenticate user and stores the user's session.
 class SignInUseCase {
@@ -20,23 +21,21 @@ class SignInUseCase {
     self.userSessionStore = userSessionStore
   }
   
-  func start(onUseCaseComplete: @escaping (Result<UserSession, Never>) -> Void) {
-    signIn(onUseCaseComplete: onUseCaseComplete)
+  func start() -> AnyPublisher<UserSession, Never> {
+    let future = signIn()
+    return future // These two lines can be collapsed into one. Leaving as two lines for clarity.
   }
   
-  func signIn(onUseCaseComplete: @escaping (Result<UserSession, Never>) -> Void) {
-    remoteAPI.signIn(username: username, password: password) { result in
-      switch result {
-      case .success(let userSession):
-        self.store(userSession: userSession, onComplete: onUseCaseComplete)
-      default:
-        fatalError()
-      }
-    }
+  func signIn() -> AnyPublisher<UserSession, Never> {
+    let future =
+      remoteAPI.signIn(username: username, password: password)
+        .flatMap(self.store(authenticatedUserSession:))
+        .eraseToAnyPublisher()
+    return future
   }
   
-  func store(userSession: UserSession, onComplete: @escaping (Result<UserSession, Never>) -> Void) {
-    userSessionStore.store(authenticatedUserSession: userSession,
-                           onComplete: onComplete)
+  func store(authenticatedUserSession: UserSession) -> Publishers.Future<UserSession, Never> {
+    let future = userSessionStore.store(authenticatedUserSession)
+    return future
   }
 }
