@@ -58,16 +58,14 @@ final class Koober: BindableObject {
   /// Determines if user is signed in when app launches.
   func startLoadUserSessionUseCase() {
     let userSessionStore = kooberDependencyContainer.userSessionStore
-    userSessionStore.getStoredAuthenticatedUserSession() { result in
-      switch result {
-      case .success(nil):
-        self.appState = .running(.unauthenticated)
-      case .success(.some(let userSession)):
-        self.appState = .running(.authenticated(userSession))
-      default:
-        fatalError()
-      }
-    }
+    let _ = userSessionStore.getStoredAuthenticatedUserSession()
+              .sink { userSession in
+                       if let userSession = userSession {
+                         self.appState = .running(.authenticated(userSession))
+                       } else {
+                         self.appState = .running(.unauthenticated)
+                       }
+                    }
   }
   
   /// Attempts to sign in a usere with credentials.
@@ -76,13 +74,8 @@ final class Koober: BindableObject {
   func startSignInUseCase(username: String, password: String) {
     let useCase = kooberDependencyContainer
       .makeSignInUseCase(username: username, password: password)
-    useCase.start { result in
-      switch result {
-      case .success(let userSession):
-        self.appState = .running(.authenticated(userSession))
-      default:
-        fatalError() // **NOTE:** Typically a failure case would need to be handled here. For this prototype, any username/password is accepted.
-      }
+    let _ = useCase.start().sink { userSession in
+      self.appState = .running(.authenticated(userSession))
     }
   }
 }
