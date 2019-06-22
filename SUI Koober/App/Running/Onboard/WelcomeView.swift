@@ -46,7 +46,7 @@ private struct SignInSignUpButtons : View {
   var body: some View {
     HStack {
       
-      NavigationButton(destination: SignInView(startSignInUseCase: koober.startSignInUseCase)) {
+      NavigationButton(destination: SignInView(viewModel: SignInViewModel(startSignInUseCase: koober.startSignInUseCase))) {
         Text("Sign In")
       }
       .accentColor(.white)
