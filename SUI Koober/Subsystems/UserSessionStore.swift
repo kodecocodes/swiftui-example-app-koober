@@ -18,7 +18,7 @@ enum GetStoredAuthenticatedUserSessionError: UserSessionStoreError {
 }
 
 enum StoreAuthenticatedUserSessionError: UserSessionStoreError {
-  case unkown
+  case unknown
 }
 
 // MARK: - Implementation
