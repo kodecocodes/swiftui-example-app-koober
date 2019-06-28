@@ -37,7 +37,7 @@ final class Koober: BindableObject {
   private(set) var didChange = PassthroughSubject<Void, Never>()
   
   /// This is the app's entire state. The SwiftUI view hierarchy is a function of this state.
-  private var appState = AppState.launching {
+  private(set) var appState = AppState.launching {
     didSet {
       didChange.send(())
     }

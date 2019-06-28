@@ -30,11 +30,11 @@ import SwiftUI
 
 /// This view is presented if a user is signed in and ready to start a new ride.
 struct NewRideView : View {
-  let user: User
+  let userSession: UserSession
   
   var body: some View {
     VStack {
-      Text("Welcome \(user.displayName)")
+      Text("Welcome \(userSession.user.displayName)")
       Text("Start a new hoppin ride...")
     }
     
@@ -44,7 +44,7 @@ struct NewRideView : View {
 #if DEBUG
 struct NewRideView_Previews : PreviewProvider {
   static var previews: some View {
-    NewRideView(user: User.fake)
+    NewRideView(userSession: UserSession.fake)
   }
 }
 #endif
