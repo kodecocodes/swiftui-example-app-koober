@@ -21,21 +21,30 @@ class SignInUseCase {
     self.userSessionStore = userSessionStore
   }
   
-  func start() -> AnyPublisher<UserSession, Never> {
+  func start() -> AnyPublisher<UserSession, ErrorMessage> {
     let future = signIn()
-    return future // These two lines can be collapsed into one. Leaving as two lines for clarity.
+                  .flatMap(store(authenticatedUserSession:))
+                  .eraseToAnyPublisher()
+    return future
   }
   
-  func signIn() -> AnyPublisher<UserSession, Never> {
+  func signIn() -> AnyPublisher<UserSession, ErrorMessage> {
     let future =
       remoteAPI.signIn(username: username, password: password)
-        .flatMap(self.store(authenticatedUserSession:))
+        .mapError { signInError in
+          signInError.errorMessage
+        }
         .eraseToAnyPublisher()
     return future
   }
   
-  func store(authenticatedUserSession: UserSession) -> Publishers.Future<UserSession, Never> {
-    let future = userSessionStore.store(authenticatedUserSession)
+  func store(authenticatedUserSession: UserSession) -> AnyPublisher<UserSession, ErrorMessage> {
+    let future =
+      userSessionStore.store(authenticatedUserSession)
+        .mapError { storeAuthenticatedUserSessionError in
+          storeAuthenticatedUserSessionError.errorMessage
+        }
+      .eraseToAnyPublisher()
     return future
   }
 }
