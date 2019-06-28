@@ -13,6 +13,6 @@ protocol ErrorMessageConvertible {
 
 extension ErrorMessageConvertible {
   var errorMessage: ErrorMessage {
-    ErrorMessage(message: "Uknown error. Please try again.")
+    ErrorMessage(message: "Unknown error. Please try again.")
   }
 }

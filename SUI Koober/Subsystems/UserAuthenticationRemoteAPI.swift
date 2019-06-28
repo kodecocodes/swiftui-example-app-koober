@@ -20,7 +20,7 @@ protocol UserAuthenticationRemoteAPIError: Error, ErrorMessageConvertible {}
 
 enum SignInError: UserAuthenticationRemoteAPIError {
   case unauthorized
-  case uknown
+  case unknown
 }
 
 /// Maps errors to error messages.
@@ -33,8 +33,8 @@ extension SignInError {
     switch self {
     case .unauthorized:
       return "Sign in failed. Please try again"
-    case .uknown:
-      return "Uknown error occured. Please try again."
+    case .unknown:
+      return "Unknown error occured. Please try again."
     }
   }
 }
