@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9F273B7A22BB24C800FA6E23 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F273B7922BB24C800FA6E23 /* ErrorMessage.swift */; };
+		60C329EB22BDDDBA007A1C71 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C329EA22BDDDBA007A1C71 /* SignInViewModel.swift */; };
 		9F35695322ADC12E007FA94C /* SignInUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35695222ADC12E007FA94C /* SignInUseCase.swift */; };
 		9F86EE2922B1378600E36C64 /* KooberDependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F86EE2822B1378600E36C64 /* KooberDependencyContainer.swift */; };
 		9F9F397822AC7C0E004D2B76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9F397722AC7C0E004D2B76 /* AppDelegate.swift */; };
@@ -31,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		9F273B7922BB24C800FA6E23 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
+		60C329EA22BDDDBA007A1C71 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		9F35695222ADC12E007FA94C /* SignInUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInUseCase.swift; sourceTree = "<group>"; };
 		9F86EE2822B1378600E36C64 /* KooberDependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KooberDependencyContainer.swift; sourceTree = "<group>"; };
 		9F9F397422AC7C0E004D2B76 /* SUI Koober.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SUI Koober.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,6 +147,7 @@
 				9F9F399D22AC88B1004D2B76 /* OnboardView.swift */,
 				9F9F398F22AC7D4D004D2B76 /* WelcomeView.swift */,
 				9F9F399122AC8203004D2B76 /* SignInView.swift */,
+				60C329EA22BDDDBA007A1C71 /* SignInViewModel.swift */,
 				9F9F399322AC8219004D2B76 /* SignUpView.swift */,
 			);
 			path = Onboard;
@@ -270,6 +273,7 @@
 				9F9F399C22AC86E2004D2B76 /* RunningView.swift in Sources */,
 				9F9F39A022ADA25E004D2B76 /* Koober.swift in Sources */,
 				9F9F399822AC85C5004D2B76 /* NewRideView.swift in Sources */,
+				60C329EB22BDDDBA007A1C71 /* SignInViewModel.swift in Sources */,
 				9F35695322ADC12E007FA94C /* SignInUseCase.swift in Sources */,
 				9FE8C31222ADBF10000F4F50 /* UserAuthenticationRemoteAPI.swift in Sources */,
 				9F9F399422AC8219004D2B76 /* SignUpView.swift in Sources */,

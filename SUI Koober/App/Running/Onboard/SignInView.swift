@@ -3,26 +3,24 @@
 import SwiftUI
 
 struct SignInView : View {
-  let startSignInUseCase: (String, String) -> Void
   
-  @State private var username: String = ""
-  @State private var password: String = ""
+  let viewModel: SignInViewModelProtocol
   
   var body: some View {
     VStack {
-      FormField($username) {
+      FormField(viewModel.email) {
         Text("Username")
           .color(.white)
           .frame(width: 80)
           .padding()
       }
-      FormField($password, secure: true) {
+      FormField(viewModel.password, secure: true) {
         Text("Password")
           .color(.white)
           .frame(width: 80)
           .padding()
       }
-      Button(action: signIn) {
+      Button(action: viewModel.signIn) {
         Text("Sign In")
       }
       .accentColor(.white)
@@ -35,19 +33,15 @@ struct SignInView : View {
     .edgesIgnoringSafeArea(.bottom)
     .navigationBarTitle(Text("Sign In"))
   }
-  
-  func signIn() {
-    startSignInUseCase(username, password)
-  }
 }
 
 #if DEBUG
 struct SignInView_Previews : PreviewProvider {
   static var previews: some View {
-    NavigationView{
-      SignInView(startSignInUseCase: { username, password in
+    NavigationView {
+      SignInView(viewModel: SignInViewModel(startSignInUseCase: { username, password in
         print("Start sign in use case. \(username):\(password)")
-      })
+      }))
     }
   }
 }
