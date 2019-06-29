@@ -28,21 +28,69 @@
 
 import SwiftUI
 
-/// This view is presented when a user is not signed in.
-struct OnboardView : View {
-  @ObjectBinding var koober: Koober
+/// This view welcomes the user and asks the user to either sign in or sign up.
+struct WelcomeView : View {
+  let anonymousKoober: AnonymousUserKoober
   
   var body: some View {
-    NavigationView {
-      WelcomeView(koober: koober)
+    VStack {
+      Spacer()
+      WelcomeContentView(anonymousKoober: anonymousKoober)
+      Spacer()
     }
+    .background(Color("BackgroundColor"))
+    .edgesIgnoringSafeArea(.bottom)
+    .navigationBarTitle(Text("Welcome"))
   }
 }
 
 #if DEBUG
-struct OnboardView_Previews : PreviewProvider {
+struct WelcomeView_Previews : PreviewProvider {
   static var previews: some View {
-    OnboardView(koober: Koober())
+    WelcomeView(anonymousKoober: AnonymousUserKoober(koober: Koober()))
   }
 }
 #endif
+
+/// App logo, sign in and sign up buttons.
+private struct WelcomeContentView : View {
+  let anonymousKoober: AnonymousUserKoober
+  
+  var body: some View {
+    VStack {
+      Image("roo_logo").background(Color("BackgroundColor"))
+      SignInSignUpButtons(anonymousKoober: anonymousKoober)
+    }
+    .background(Color("BackgroundColor"))
+    .padding()
+  }
+}
+
+private struct SignInSignUpButtons : View {
+  let anonymousKoober: AnonymousUserKoober
+  
+  var body: some View {
+    HStack {
+      
+      NavigationButton(destination: makeSignInView()) {
+        Text("Sign In")
+      }
+      .accentColor(.white)
+      .padding()
+      
+      Spacer()
+      
+      NavigationButton(destination: SignUpView()) {
+        Text("Sign Up")
+      }
+      .accentColor(.white)
+      .padding()
+    }
+  }
+  
+  func makeSignInView() -> SignInView {
+    let viewModel = SignInViewModel()
+    let signInActions = SignInActions(viewModel: viewModel, anonymousUserKoober: self.anonymousKoober)
+    return SignInView(viewModel: viewModel, userAuthenticator: signInActions)
+  }
+}

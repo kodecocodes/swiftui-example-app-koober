@@ -26,34 +26,36 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
+import Foundation
+import Combine
 
-/// This view is presented once the app is finished launching and is running.
-struct RunningComponent : View {
-  let userState: UserState
+class AnonymousUserKoober: Equatable {
+  let kooberStateStore: KooberStateStore
+  let environment: AnonymousUserEnvironment
   
-  var body: some View {
-    VStack(content: content)
+  init(kooberStateStore: KooberStateStore, environment: AnonymousUserEnvironment) {
+    self.kooberStateStore = kooberStateStore
+    self.environment = environment
   }
   
-  func content() -> AnyView {
-    switch userState {
-    case .unauthenticated(let anonymousKoober):
-      return AnyView(OnboardView(anonymousKoober: anonymousKoober))
-    case .authenticated(let userSession):
-      return AnyView(NewRideView(userSession: userSession))
-    }
+  /// Attempts to sign in a usere with credentials.
+  /// - Parameter email: User provided email.
+  /// - Parameter password: User provided password.
+  func startSignInUseCase(email: String, password: String) -> AnyPublisher<UserSession, ErrorMessage> {
+    let useCase = environment.makeSignInUseCase(username: email, password: password)
+    let publisher = useCase.start()
+    return publisher
+  }
+  
+  func on(authenticatedUserSession userSession: UserSession) {
+    kooberStateStore.on(authenticatedUserSession: userSession)
+  }
+  
+  static func == (lhs: AnonymousUserKoober, rhs: AnonymousUserKoober) -> Bool {
+    lhs === rhs
   }
 }
 
-#if DEBUG
-struct RunningView_Previews : PreviewProvider {
-  static var previews: some View {
-    RunningView(
-      userState:
-        .unauthenticated(
-          AnonymousUserKoober(kooberStateStore: KooberStateStore(),
-                              environment: AnonymousUserDependencyContainer(userSessionStore: KooberDependencyContainer().userSessionStore))))
-  }
+protocol AnonymousUserEnvironment {
+  func makeSignInUseCase(username: String, password: String) -> SignInUseCase
 }
-#endif

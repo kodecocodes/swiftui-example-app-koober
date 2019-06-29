@@ -28,32 +28,22 @@
 
 import SwiftUI
 
-/// This view is presented once the app is finished launching and is running.
-struct RunningComponent : View {
-  let userState: UserState
+/// This view is presented when a user is not signed in.
+struct OnboardComponent : View {
+  let anonymousKoober: AnonymousUserKoober
   
   var body: some View {
-    VStack(content: content)
-  }
-  
-  func content() -> AnyView {
-    switch userState {
-    case .unauthenticated(let anonymousKoober):
-      return AnyView(OnboardView(anonymousKoober: anonymousKoober))
-    case .authenticated(let userSession):
-      return AnyView(NewRideView(userSession: userSession))
+    NavigationView {
+      WelcomeView(anonymousKoober: anonymousKoober)
     }
   }
 }
 
 #if DEBUG
-struct RunningView_Previews : PreviewProvider {
+struct OnboardView_Previews : PreviewProvider {
   static var previews: some View {
-    RunningView(
-      userState:
-        .unauthenticated(
-          AnonymousUserKoober(kooberStateStore: KooberStateStore(),
-                              environment: AnonymousUserDependencyContainer(userSessionStore: KooberDependencyContainer().userSessionStore))))
+    OnboardView(anonymousKoober: AnonymousUserKoober(kooberStateStore: KooberStateStore(),
+                                                     environment: AnonymousUserDependencyContainer(userSessionStore: KooberDependencyContainer().userSessionStore)))
   }
 }
 #endif

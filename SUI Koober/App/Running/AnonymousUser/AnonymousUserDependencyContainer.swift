@@ -26,34 +26,34 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import SwiftUI
+import Foundation
 
-/// This view is presented once the app is finished launching and is running.
-struct RunningComponent : View {
-  let userState: UserState
+final class AnonymousUserDependencyContainer {
+  // MARK: Subsystems
+  /// Data store that holds the authenticated user's session. This uses a fake implementation to simulate whether a user is signed when the app launches.
+  let userSessionStore: UserSessionStore
   
-  var body: some View {
-    VStack(content: content)
+  init(userSessionStore: UserSessionStore) {
+    self.userSessionStore = userSessionStore
   }
   
-  func content() -> AnyView {
-    switch userState {
-    case .unauthenticated(let anonymousKoober):
-      return AnyView(OnboardView(anonymousKoober: anonymousKoober))
-    case .authenticated(let userSession):
-      return AnyView(NewRideView(userSession: userSession))
-    }
+  // MARK: Factories
+  /// Factory method for creating a new sign in use case to sign users into Koober.
+  func makeSignInUseCase(username: String, password: String) -> SignInUseCase {
+    // Gather dependencies.
+    let remoteAPI = makeUserAuthenticationRemoteAPI()
+    let userSessionStore = self.userSessionStore
+    // Make use case.
+    return SignInUseCase(username: username,
+                         password: password,
+                         remoteAPI: remoteAPI,
+                         userSessionStore: userSessionStore)
+  }
+  
+  /// Makes a new user authentication remote API for authenticating users using the cloud.
+  func makeUserAuthenticationRemoteAPI() -> UserAuthenticationRemoteAPI {
+    return FakeUserAuthenticationRemoteAPI()
   }
 }
 
-#if DEBUG
-struct RunningView_Previews : PreviewProvider {
-  static var previews: some View {
-    RunningView(
-      userState:
-        .unauthenticated(
-          AnonymousUserKoober(kooberStateStore: KooberStateStore(),
-                              environment: AnonymousUserDependencyContainer(userSessionStore: KooberDependencyContainer().userSessionStore))))
-  }
-}
-#endif
+extension AnonymousUserDependencyContainer: AnonymousUserEnvironment {}
