@@ -35,15 +35,18 @@ struct SelectDropoffLocationView : View {
   var body: some View {
     NavigationView {
       SearchField(searchQuery: $searchQuery)
-      DropoffLocationList(locations: locations)
+      DropoffLocationList(locations: locations, action: select(location:))
         .navigationBarTitle(Text("Where to?"))
         .navigationBarItems(leading: CancelButton(action: cancel))
     }
-    
   }
   
   func cancel() {
     // TODO: Implement view dismiss.
+  }
+  
+  func select(location: Location) {
+    // TODO: Implement selection logic.
   }
 }
 
@@ -70,14 +73,22 @@ struct SearchField: View {
 
 struct DropoffLocationList: View {
   let locations: [Location]
+  let action: (Location) -> Void
   
   var body: some View {
     List(locations) { location in
-      NavigationButton(destination: Text("Hi")) {
+      Button(action: {
+        self.select(location: location)
+      }) {
         Text(location.name)
       }
     }
   }
+  
+  func select(location: Location) {
+    action(location)
+  }
+  
 }
 
 struct CancelButton: View {
