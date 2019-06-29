@@ -33,11 +33,41 @@ struct NewRideView : View {
   let user: User
   
   var body: some View {
-    VStack {
-      Text("Welcome \(user.displayName)")
-      Text("Start a new hoppin ride...")
+    ZStack(alignment: .top) {
+      MapView()
+      HStack(alignment: .bottom) {
+        Spacer()
+        Image(systemName: "person")
+          .font(.title)
+          .padding(.all)
+      }
+      WhereToButton(action: goToDropoffLocationSelectionScreen)
+        .padding(.top, 60)
     }
-    
+  }
+  
+  func goToDropoffLocationSelectionScreen() {
+    // TODO: Navigate to dropoff location selection.
+  }
+}
+
+struct WhereToButton: View {
+  let action: () -> Void
+  
+  var body: some View {
+    Button(action: action) {
+      Text("Where to?")
+        .color(.black)
+        .padding(EdgeInsets(top: 15, leading: 80, bottom: 15, trailing: 80))
+        .background(Color.white)
+        .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+    }
+  }
+}
+
+struct MapView: View {
+  var body: some View {
+    Color.red
   }
 }
 
