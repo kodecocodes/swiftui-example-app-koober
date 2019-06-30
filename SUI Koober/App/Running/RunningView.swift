@@ -29,8 +29,9 @@
 import SwiftUI
 
 /// This view is presented once the app is finished launching and is running.
-struct RunningComponent : View {
+struct RunningView : View {
   let userState: UserState
+  @ObjectBinding var koober: Koober
   
   var body: some View {
     VStack(content: content)
@@ -38,8 +39,8 @@ struct RunningComponent : View {
   
   func content() -> AnyView {
     switch userState {
-    case .unauthenticated(let anonymousKoober):
-      return AnyView(OnboardView(anonymousKoober: anonymousKoober))
+    case .unauthenticated:
+      return AnyView(OnboardView(koober: koober))
     case .authenticated(let userSession):
       return AnyView(NewRideView(userSession: userSession))
     }
@@ -49,11 +50,7 @@ struct RunningComponent : View {
 #if DEBUG
 struct RunningView_Previews : PreviewProvider {
   static var previews: some View {
-    RunningView(
-      userState:
-        .unauthenticated(
-          AnonymousUserKoober(kooberStateStore: KooberStateStore(),
-                              environment: AnonymousUserDependencyContainer(userSessionStore: KooberDependencyContainer().userSessionStore))))
+    RunningView(userState: .unauthenticated, koober: Koober())
   }
 }
 #endif

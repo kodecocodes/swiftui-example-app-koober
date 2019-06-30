@@ -26,53 +26,76 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import Foundation
+import SwiftUI
 
-// MARK: - Model
-
-enum AppState: Equatable {
-  case launching
-  case running(UserState)
-}
-
-/// Represents whether user is signed in or not. In a complete implemnetation, the `authenticated` case would hold a `UserSession` as an associated value.
-enum UserState: Equatable {
-  case unauthenticated(AnonymousUserKoober)
-  case authenticated(UserSession)
-}
-
-/// Placeholder. This type would normally hold the signed in user's information and auth token.
-struct UserSession: Equatable {
-  let user: User
-  let remoteSession: RemoteUserSession
-}
-
-/// User's profile information.
-struct User: Equatable {
-  let displayName: String
-}
-
-/// User's cloud session.
-struct RemoteUserSession: Equatable {
-  let authToken: String
-}
-
-// MARK: Fakes
-
-extension UserSession {
-  static var fake: UserSession {
-    UserSession(user: User.fake, remoteSession: RemoteUserSession.fake)
+struct SignInView : View {
+  
+  let viewModel: SignInViewModelProtocol
+  
+  var body: some View {
+    VStack {
+      FormField(viewModel.email) {
+        Text("Username")
+          .color(.white)
+          .frame(width: 80)
+          .padding()
+      }
+      FormField(viewModel.password, secure: true) {
+        Text("Password")
+          .color(.white)
+          .frame(width: 80)
+          .padding()
+      }
+      Button(action: viewModel.signIn) {
+        Text("Sign In")
+      }
+      .accentColor(.white)
+      .padding()
+      
+      Spacer()
+    }
+    .padding()
+    .background(Color("BackgroundColor"))
+    .edgesIgnoringSafeArea(.bottom)
+    .navigationBarTitle(Text("Sign In"))
   }
 }
 
-extension User {
-  static var fake: User {
-    User(displayName: "Fake User")
+#if DEBUG
+struct SignInView_Previews : PreviewProvider {
+  static var previews: some View {
+    NavigationView {
+      SignInView(viewModel: SignInViewModel(startSignInUseCase: { username, password in
+        print("Start sign in use case. \(username):\(password)")
+      }))
+    }
   }
 }
+#endif
 
-extension RemoteUserSession {
-  static var fake: RemoteUserSession {
-    RemoteUserSession(authToken: "fake-auth-token")
+private struct FormField<Label: View>: View {
+  private var text: Binding<String>
+  let secure: Bool
+  let label: Label
+  
+  init(_ text: Binding<String>, secure: Bool = false, @ViewBuilder label: () -> Label) {
+    self.text = text
+    self.secure = secure
+    self.label = label()
+  }
+  
+  var body: some View {
+    HStack {
+      label
+      if (secure) {
+        SecureField(text)
+          .padding()
+          .background(Color(hue: 1, saturation: 1, brightness: 1, opacity: 0.1))
+      } else {
+        TextField(text)
+          .padding()
+          .background(Color(hue: 1, saturation: 1, brightness: 1, opacity: 0.1))
+      }
+    }
   }
 }

@@ -27,49 +27,64 @@
 /// THE SOFTWARE.
 
 import SwiftUI
-import Combine
 
-final class SignInViewModel: BindableObject {
-  let didChange = PassthroughSubject<Void, Never>()
+/// This view welcomes the user and asks the user to either sign in or sign up.
+struct WelcomeView : View {
+  @ObjectBinding var koober: Koober
   
-  var email: String = "" {
-    didSet {
-      didChange.send(())
+  var body: some View {
+    VStack {
+      Spacer()
+      WelcomeContentView(koober: koober)
+      Spacer()
     }
-  }
-  
-  var password: String = "" {
-    didSet {
-      didChange.send(())
-    }
+    .background(Color("BackgroundColor"))
+    .edgesIgnoringSafeArea(.bottom)
+    .navigationBarTitle(Text("Welcome"))
   }
 }
 
-protocol UserAuthenticator {
-  func signIn()
+#if DEBUG
+struct WelcomeView_Previews : PreviewProvider {
+  static var previews: some View {
+    WelcomeView(koober: Koober())
+  }
+}
+#endif
+
+/// App logo, sign in and sign up buttons.
+private struct WelcomeContentView : View {
+  @ObjectBinding var koober: Koober
+  
+  var body: some View {
+    VStack {
+      Image("roo_logo").background(Color("BackgroundColor"))
+      SignInSignUpButtons(koober: koober)
+    }
+    .background(Color("BackgroundColor"))
+    .padding()
+  }
 }
 
-final class SignInActions: UserAuthenticator {
-  private let viewModel: SignInViewModel
-  private let anonymousUserKoober: AnonymousUserKoober
+private struct SignInSignUpButtons : View {
+  @ObjectBinding var koober: Koober
   
-  init(viewModel: SignInViewModel,
-       anonymousUserKoober: AnonymousUserKoober) {
-    self.viewModel = viewModel
-    self.anonymousUserKoober = anonymousUserKoober
-  }
-  
-  // signIn(viewModel)
-  func signIn() {
-    startSignInUseCase(email: viewModel.email, password: viewModel.password)
-    
-    // or
-    // startSignInUseCase(viewModel)
-  }
-  
-  private func startSignInUseCase(email: String, password: String) {
-    let _ = anonymousUserKoober.startSignInUseCase(email: email, password: password).sink { userSession in
-      self.anonymousUserKoober.on(authenticatedUserSession: userSession)
+  var body: some View {
+    HStack {
+      
+      NavigationButton(destination: SignInView(viewModel: SignInViewModel(startSignInUseCase: koober.startSignInUseCase))) {
+        Text("Sign In")
+      }
+      .accentColor(.white)
+      .padding()
+      
+      Spacer()
+      
+      NavigationButton(destination: SignUpView()) {
+        Text("Sign Up")
+      }
+      .accentColor(.white)
+      .padding()
     }
   }
 }

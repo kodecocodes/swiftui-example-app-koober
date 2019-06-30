@@ -30,56 +30,51 @@ import Foundation
 import SwiftUI
 import Combine
 
-final class Koober {
-  let stateStore: KooberStateStore
-  let appLauncher: AppLauncher
+/// `Koober` is a state store that holds the app's current state. SwiftUI will be notified anytime _anything_ changes in `appState`. This means all the views are recomputed by SwiftUI whenevr anything changes. Recomputing views is supposed to be cheap. **I haven't profiled taking this strategy so your milage may vary.**
+final class Koober: BindableObject {
   
-  init() {
-    let stateStore = KooberStateStore()
-    let work = KooberWork(stateStore: stateStore)
-    self.stateStore = stateStore
-    self.appLauncher = work
-  }
-
-  init(stateStore: KooberStateStore, appLauncher: AppLauncher) {
-    self.stateStore = stateStore
-    self.appLauncher = appLauncher
-    
-    appLauncher.launchKoober()
-  }
-  
-  func on(authenticatedUserSession userSession: UserSession) {
-    stateStore.on(authenticatedUserSession: userSession)
-  }
-}
-
-/// `KooberStateStore` is a state store that holds the app's current state. SwiftUI will be notified anytime _anything_ changes in `appState`. This means all the views are recomputed by SwiftUI whenevr anything changes. Recomputing views is supposed to be cheap. **I haven't profiled taking this strategy so your milage may vary.**
-final class KooberStateStore: BindableObject {
   /// `Publisher` required by `BindableObject` protocol. This publisher gets sent a new `Void` value anytime `appState` changes.
   private(set) var didChange = PassthroughSubject<Void, Never>()
   
   /// This is the app's entire state. The SwiftUI view hierarchy is a function of this state.
-  var appState = AppState.launching {
+  private(set) var appState = AppState.launching {
     didSet {
       didChange.send(())
     }
   }
   
-  func on(authenticatedUserSession userSession: UserSession) {
-    self.appState = .running(.authenticated(userSession))
-  }
-}
-
-protocol AppLauncher {
-  func launchKoober()
-}
-
-final class KooberWork: AppLauncher {
-  let stateStore: KooberStateStore
-  let dependencyContainer = KooberDependencyContainer()
+  // MARK: Dependencies
+  let kooberDependencyContainer = KooberDependencyContainer()
   
-  init(stateStore: KooberStateStore) {
-    self.stateStore = stateStore
+  // MARK: Computed properties
+  /// Helper computed property used by SwiftUI views.
+  var isLaunching: Bool {
+    return appState == .launching
+  }
+  
+  /// Helper computed property used by SwiftUI views.
+  var userIsAuthenticated: Bool {
+    switch appState {
+    case .running(.authenticated):
+      return true
+    default:
+      return false
+    }
+  }
+  
+  /// Helper computed property for accessing user.
+  /// TODO: Undo this hack once authenticated dependency container is in place.
+  var authenticatedUser: User? {
+    switch appState {
+    case .running(.authenticated(let userSession)):
+      return userSession.user
+    default:
+      return nil
+    }
+  }
+  
+  init() {
+    launchKoober()
   }
   
   func launchKoober() {
@@ -88,19 +83,74 @@ final class KooberWork: AppLauncher {
   
   /// Determines if user is signed in when app launches.
   func startLoadUserSessionUseCase() {
-    let userSessionStore = dependencyContainer.userSessionStore
+    let userSessionStore = kooberDependencyContainer.userSessionStore
     let _ = userSessionStore.getStoredAuthenticatedUserSession()
-      .sink { userSession in
-        if let userSession = userSession {
-          self.stateStore.appState = .running(.authenticated(userSession))
-        } else {
-          self.stateStore.appState = .running(.unauthenticated(self.makeAnonymousUserKoober()))
-        }
-    }
+              .sink { userSession in
+                       if let userSession = userSession {
+                         self.appState = .running(.authenticated(userSession))
+                       } else {
+                         self.appState = .running(.unauthenticated)
+                       }
+                    }
   }
   
-  func makeAnonymousUserKoober() -> AnonymousUserKoober {
-    let dependencyContainer = AnonymousUserDependencyContainer(userSessionStore: self.dependencyContainer.userSessionStore)
-    return AnonymousUserKoober(kooberStateStore: self.stateStore, environment: dependencyContainer)
+  /// Attempts to sign in a usere with credentials.
+  /// - Parameter username: User provided userename.
+  /// - Parameter password: User provided password.
+  func startSignInUseCase(username: String, password: String) {
+    let useCase = kooberDependencyContainer
+      .makeSignInUseCase(username: username, password: password)
+    let _ = useCase.start().sink { userSession in
+      self.appState = .running(.authenticated(userSession))
+    }
+  }
+}
+
+// MARK: - Model
+
+enum AppState: Equatable {
+  case launching
+  case running(UserState)
+}
+
+/// Represents whether user is signed in or not. In a complete implemnetation, the `authenticated` case would hold a `UserSession` as an associated value.
+enum UserState: Equatable {
+  case unauthenticated
+  case authenticated(UserSession)
+}
+
+/// Placeholder. This type would normally hold the signed in user's information and auth token.
+struct UserSession: Equatable {
+  let user: User
+  let remoteSession: RemoteUserSession
+}
+
+/// User's profile information.
+struct User: Equatable {
+  let displayName: String
+}
+
+/// User's cloud session.
+struct RemoteUserSession: Equatable {
+  let authToken: String
+}
+
+// MARK: Fakes
+
+extension UserSession {
+  static var fake: UserSession {
+    UserSession(user: User.fake, remoteSession: RemoteUserSession.fake)
+  }
+}
+
+extension User {
+  static var fake: User {
+    User(displayName: "Fake User")
+  }
+}
+
+extension RemoteUserSession {
+  static var fake: RemoteUserSession {
+    RemoteUserSession(authToken: "fake-auth-token")
   }
 }

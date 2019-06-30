@@ -7,12 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		60C329EB22BDDDBA007A1C71 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C329EA22BDDDBA007A1C71 /* SignInViewModel.swift */; };
 		9F273B7A22BB24C800FA6E23 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F273B7922BB24C800FA6E23 /* ErrorMessage.swift */; };
+		60C329EB22BDDDBA007A1C71 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C329EA22BDDDBA007A1C71 /* SignInViewModel.swift */; };
 		9F35695322ADC12E007FA94C /* SignInUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35695222ADC12E007FA94C /* SignInUseCase.swift */; };
 		9F86EE2922B1378600E36C64 /* KooberDependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F86EE2822B1378600E36C64 /* KooberDependencyContainer.swift */; };
-		9F878EB922C6B7D000ED287C /* AnonymousUserDependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F878EB822C6B7D000ED287C /* AnonymousUserDependencyContainer.swift */; };
-		9F878EBB22C6C24F00ED287C /* KooberModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F878EBA22C6C24F00ED287C /* KooberModel.swift */; };
 		9F9F397822AC7C0E004D2B76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9F397722AC7C0E004D2B76 /* AppDelegate.swift */; };
 		9F9F397A22AC7C0E004D2B76 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9F397922AC7C0E004D2B76 /* SceneDelegate.swift */; };
 		9F9F397E22AC7C0F004D2B76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F9F397D22AC7C0F004D2B76 /* Assets.xcassets */; };
@@ -28,19 +26,15 @@
 		9F9F399E22AC88B1004D2B76 /* OnboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9F399D22AC88B1004D2B76 /* OnboardView.swift */; };
 		9F9F39A022ADA25E004D2B76 /* Koober.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9F399F22ADA25E004D2B76 /* Koober.swift */; };
 		9FAD7ED822B58FF00050A6B8 /* FullscreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAD7ED722B58FF00050A6B8 /* FullscreenView.swift */; };
-		9FD688B922C5AB87002D02C7 /* AuthenticatedKoober.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD688B822C5AB87002D02C7 /* AuthenticatedKoober.swift */; };
-		9FD688BB22C5AD35002D02C7 /* AnonymousUserKoober.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FD688BA22C5AD35002D02C7 /* AnonymousUserKoober.swift */; };
 		9FE8C31022ADBEB2000F4F50 /* UserSessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE8C30F22ADBEB2000F4F50 /* UserSessionStore.swift */; };
 		9FE8C31222ADBF10000F4F50 /* UserAuthenticationRemoteAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FE8C31122ADBF10000F4F50 /* UserAuthenticationRemoteAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		60C329EA22BDDDBA007A1C71 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		9F273B7922BB24C800FA6E23 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
+		60C329EA22BDDDBA007A1C71 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		9F35695222ADC12E007FA94C /* SignInUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInUseCase.swift; sourceTree = "<group>"; };
 		9F86EE2822B1378600E36C64 /* KooberDependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KooberDependencyContainer.swift; sourceTree = "<group>"; };
-		9F878EB822C6B7D000ED287C /* AnonymousUserDependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnonymousUserDependencyContainer.swift; sourceTree = "<group>"; };
-		9F878EBA22C6C24F00ED287C /* KooberModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KooberModel.swift; sourceTree = "<group>"; };
 		9F9F397422AC7C0E004D2B76 /* SUI Koober.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SUI Koober.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F9F397722AC7C0E004D2B76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9F9F397922AC7C0E004D2B76 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -58,8 +52,6 @@
 		9F9F399D22AC88B1004D2B76 /* OnboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardView.swift; sourceTree = "<group>"; };
 		9F9F399F22ADA25E004D2B76 /* Koober.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Koober.swift; sourceTree = "<group>"; };
 		9FAD7ED722B58FF00050A6B8 /* FullscreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenView.swift; sourceTree = "<group>"; };
-		9FD688B822C5AB87002D02C7 /* AuthenticatedKoober.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatedKoober.swift; sourceTree = "<group>"; };
-		9FD688BA22C5AD35002D02C7 /* AnonymousUserKoober.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnonymousUserKoober.swift; sourceTree = "<group>"; };
 		9FE8C30F22ADBEB2000F4F50 /* UserSessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSessionStore.swift; sourceTree = "<group>"; };
 		9FE8C31122ADBF10000F4F50 /* UserAuthenticationRemoteAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthenticationRemoteAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,25 +81,6 @@
 				9F35695222ADC12E007FA94C /* SignInUseCase.swift */,
 			);
 			path = UseCases;
-			sourceTree = "<group>";
-		};
-		9F878EB622C6B76900ED287C /* AnonymousUser */ = {
-			isa = PBXGroup;
-			children = (
-				9FD688BA22C5AD35002D02C7 /* AnonymousUserKoober.swift */,
-				9F878EB822C6B7D000ED287C /* AnonymousUserDependencyContainer.swift */,
-				9F9F39A322ADB740004D2B76 /* Onboard */,
-			);
-			path = AnonymousUser;
-			sourceTree = "<group>";
-		};
-		9F878EB722C6B77B00ED287C /* AuthenticatedUser */ = {
-			isa = PBXGroup;
-			children = (
-				9FD688B822C5AB87002D02C7 /* AuthenticatedKoober.swift */,
-				9F9F39A422ADB74F004D2B76 /* NewRide */,
-			);
-			path = AuthenticatedUser;
 			sourceTree = "<group>";
 		};
 		9F9F396B22AC7C0E004D2B76 = {
@@ -162,8 +135,8 @@
 			isa = PBXGroup;
 			children = (
 				9F9F399B22AC86E2004D2B76 /* RunningView.swift */,
-				9F878EB622C6B76900ED287C /* AnonymousUser */,
-				9F878EB722C6B77B00ED287C /* AuthenticatedUser */,
+				9F9F39A322ADB740004D2B76 /* Onboard */,
+				9F9F39A422ADB74F004D2B76 /* NewRide */,
 			);
 			path = Running;
 			sourceTree = "<group>";
@@ -201,9 +174,8 @@
 			children = (
 				9F9F397722AC7C0E004D2B76 /* AppDelegate.swift */,
 				9F9F397922AC7C0E004D2B76 /* SceneDelegate.swift */,
-				9F9F399F22ADA25E004D2B76 /* Koober.swift */,
-				9F878EBA22C6C24F00ED287C /* KooberModel.swift */,
 				9F86EE2822B1378600E36C64 /* KooberDependencyContainer.swift */,
+				9F9F399F22ADA25E004D2B76 /* Koober.swift */,
 				9F9F399522AC857F004D2B76 /* MainView.swift */,
 				9F9F39A122ADB717004D2B76 /* Launching */,
 				9F9F39A222ADB72A004D2B76 /* Running */,
@@ -299,15 +271,11 @@
 				9F9F399022AC7D4D004D2B76 /* WelcomeView.swift in Sources */,
 				9F9F399A22AC8682004D2B76 /* LaunchingView.swift in Sources */,
 				9F9F399C22AC86E2004D2B76 /* RunningView.swift in Sources */,
-				9FD688B922C5AB87002D02C7 /* AuthenticatedKoober.swift in Sources */,
-				9F878EBB22C6C24F00ED287C /* KooberModel.swift in Sources */,
 				9F9F39A022ADA25E004D2B76 /* Koober.swift in Sources */,
 				9F9F399822AC85C5004D2B76 /* NewRideView.swift in Sources */,
-				9FD688BB22C5AD35002D02C7 /* AnonymousUserKoober.swift in Sources */,
 				60C329EB22BDDDBA007A1C71 /* SignInViewModel.swift in Sources */,
 				9F35695322ADC12E007FA94C /* SignInUseCase.swift in Sources */,
 				9FE8C31222ADBF10000F4F50 /* UserAuthenticationRemoteAPI.swift in Sources */,
-				9F878EB922C6B7D000ED287C /* AnonymousUserDependencyContainer.swift in Sources */,
 				9F9F399422AC8219004D2B76 /* SignUpView.swift in Sources */,
 				9F9F399E22AC88B1004D2B76 /* OnboardView.swift in Sources */,
 				9FAD7ED822B58FF00050A6B8 /* FullscreenView.swift in Sources */,

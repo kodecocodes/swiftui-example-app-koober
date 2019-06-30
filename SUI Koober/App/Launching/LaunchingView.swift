@@ -29,7 +29,7 @@
 import SwiftUI
 
 /// This view is presented while the app is launching, i.e. determining if a user is signed in.
-struct LaunchingComponent : View {
+struct LaunchingView : View {
   var body: some View {
     FullscreenView(backgroundColor: Color("BackgroundColor")) {
       Image("roo_logo")
