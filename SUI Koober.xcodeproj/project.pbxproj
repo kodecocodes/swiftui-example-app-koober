@@ -11,6 +11,7 @@
 		9F273B7A22BB24C800FA6E23 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F273B7922BB24C800FA6E23 /* ErrorMessage.swift */; };
 		9F35695322ADC12E007FA94C /* SignInUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35695222ADC12E007FA94C /* SignInUseCase.swift */; };
 		9F4451FF22C97BB100D6DA78 /* EnjoyTheRideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4451FE22C97BB100D6DA78 /* EnjoyTheRideView.swift */; };
+		9F44520222C97C8C00D6DA78 /* SendingNewRideRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F44520122C97C8C00D6DA78 /* SendingNewRideRequestView.swift */; };
 		9F7A841E22C7EA97001FF475 /* LocatingUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7A841D22C7EA97001FF475 /* LocatingUserView.swift */; };
 		9F7A842122C7F6A5001FF475 /* SelectDropoffLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7A842022C7F6A5001FF475 /* SelectDropoffLocationView.swift */; };
 		9F7A842322C80582001FF475 /* SelectRideOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7A842222C80582001FF475 /* SelectRideOptionView.swift */; };
@@ -40,6 +41,7 @@
 		9F273B7922BB24C800FA6E23 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		9F35695222ADC12E007FA94C /* SignInUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInUseCase.swift; sourceTree = "<group>"; };
 		9F4451FE22C97BB100D6DA78 /* EnjoyTheRideView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnjoyTheRideView.swift; sourceTree = "<group>"; };
+		9F44520122C97C8C00D6DA78 /* SendingNewRideRequestView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendingNewRideRequestView.swift; sourceTree = "<group>"; };
 		9F7A841D22C7EA97001FF475 /* LocatingUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocatingUserView.swift; sourceTree = "<group>"; };
 		9F7A842022C7F6A5001FF475 /* SelectDropoffLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDropoffLocationView.swift; sourceTree = "<group>"; };
 		9F7A842222C80582001FF475 /* SelectRideOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRideOptionView.swift; sourceTree = "<group>"; };
@@ -99,6 +101,14 @@
 				9F4451FE22C97BB100D6DA78 /* EnjoyTheRideView.swift */,
 			);
 			path = ConfirmNewRide;
+			sourceTree = "<group>";
+		};
+		9F44520022C97C8C00D6DA78 /* SendNewRideRequest */ = {
+			isa = PBXGroup;
+			children = (
+				9F44520122C97C8C00D6DA78 /* SendingNewRideRequestView.swift */,
+			);
+			path = SendNewRideRequest;
 			sourceTree = "<group>";
 		};
 		9F7A841A22C7EA64001FF475 /* LocateUser */ = {
@@ -195,6 +205,7 @@
 				9F7A842222C80582001FF475 /* SelectRideOptionView.swift */,
 				9F7A841A22C7EA64001FF475 /* LocateUser */,
 				9F7A841F22C7F626001FF475 /* SelectDropoffLocation */,
+				9F44520022C97C8C00D6DA78 /* SendNewRideRequest */,
 				9F4451FD22C97BB100D6DA78 /* ConfirmNewRide */,
 			);
 			path = NewRide;
@@ -322,6 +333,7 @@
 				9F9F39A022ADA25E004D2B76 /* Koober.swift in Sources */,
 				9F9F399822AC85C5004D2B76 /* NewRideView.swift in Sources */,
 				60C329EB22BDDDBA007A1C71 /* SignInViewModel.swift in Sources */,
+				9F44520222C97C8C00D6DA78 /* SendingNewRideRequestView.swift in Sources */,
 				9F35695322ADC12E007FA94C /* SignInUseCase.swift in Sources */,
 				9FE8C31222ADBF10000F4F50 /* UserAuthenticationRemoteAPI.swift in Sources */,
 				9F9F399422AC8219004D2B76 /* SignUpView.swift in Sources */,
