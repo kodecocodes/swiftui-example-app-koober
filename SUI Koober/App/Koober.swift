@@ -128,6 +128,9 @@ struct UserSession: Equatable {
 /// User's profile information.
 struct User: Equatable {
   let displayName: String
+  let fullName: String
+  let email: String
+  let phone: String
 }
 
 /// User's cloud session.
@@ -145,7 +148,12 @@ extension UserSession {
 
 extension User {
   static var fake: User {
-    User(displayName: "Fake User")
+    User(
+      displayName: "Johnny",
+      fullName: "Johnny Appleseed",
+      email: "johnny@gmail.com",
+      phone: "510-736-8754"
+    )
   }
 }
 
