@@ -34,12 +34,15 @@ struct MainView : View {
   @ObjectBinding var koober: Koober
   
   var body: some View {
-    VStack {
-      if koober.isLaunching {
-        LaunchingView()
-      } else {
-        RunningView(koober: koober)
-      }
+    VStack(content: contentView)
+  }
+  
+  func contentView() -> AnyView {
+    switch koober.appState {
+    case .launching:
+      return AnyView(LaunchingView())
+    case .running(let userState):
+      return AnyView(RunningView(userState: userState, koober: koober))
     }
   }
 }
