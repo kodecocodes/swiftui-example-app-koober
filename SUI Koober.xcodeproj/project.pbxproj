@@ -11,6 +11,7 @@
 		9F273B7A22BB24C800FA6E23 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F273B7922BB24C800FA6E23 /* ErrorMessage.swift */; };
 		9F35695322ADC12E007FA94C /* SignInUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F35695222ADC12E007FA94C /* SignInUseCase.swift */; };
 		9F7A841E22C7EA97001FF475 /* LocatingUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7A841D22C7EA97001FF475 /* LocatingUserView.swift */; };
+		9F7A842122C7F6A5001FF475 /* SelectDropoffLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7A842022C7F6A5001FF475 /* SelectDropoffLocationView.swift */; };
 		9F7A842322C80582001FF475 /* SelectRideOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7A842222C80582001FF475 /* SelectRideOptionView.swift */; };
 		9F86EE2922B1378600E36C64 /* KooberDependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F86EE2822B1378600E36C64 /* KooberDependencyContainer.swift */; };
 		9F9F397822AC7C0E004D2B76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9F397722AC7C0E004D2B76 /* AppDelegate.swift */; };
@@ -37,6 +38,7 @@
 		9F273B7922BB24C800FA6E23 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		9F35695222ADC12E007FA94C /* SignInUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInUseCase.swift; sourceTree = "<group>"; };
 		9F7A841D22C7EA97001FF475 /* LocatingUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocatingUserView.swift; sourceTree = "<group>"; };
+		9F7A842022C7F6A5001FF475 /* SelectDropoffLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDropoffLocationView.swift; sourceTree = "<group>"; };
 		9F7A842222C80582001FF475 /* SelectRideOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRideOptionView.swift; sourceTree = "<group>"; };
 		9F86EE2822B1378600E36C64 /* KooberDependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KooberDependencyContainer.swift; sourceTree = "<group>"; };
 		9F9F397422AC7C0E004D2B76 /* SUI Koober.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SUI Koober.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,6 +95,14 @@
 				9F7A841D22C7EA97001FF475 /* LocatingUserView.swift */,
 			);
 			path = LocateUser;
+			sourceTree = "<group>";
+		};
+		9F7A841F22C7F626001FF475 /* SelectDropoffLocation */ = {
+			isa = PBXGroup;
+			children = (
+				9F7A842022C7F6A5001FF475 /* SelectDropoffLocationView.swift */,
+			);
+			path = SelectDropoffLocation;
 			sourceTree = "<group>";
 		};
 		9F9F396B22AC7C0E004D2B76 = {
@@ -171,6 +181,7 @@
 				9F9F399722AC85C5004D2B76 /* NewRideView.swift */,
 				9F7A842222C80582001FF475 /* SelectRideOptionView.swift */,
 				9F7A841A22C7EA64001FF475 /* LocateUser */,
+				9F7A841F22C7F626001FF475 /* SelectDropoffLocation */,
 			);
 			path = NewRide;
 			sourceTree = "<group>";
@@ -291,6 +302,7 @@
 				9F35695322ADC12E007FA94C /* SignInUseCase.swift in Sources */,
 				9FE8C31222ADBF10000F4F50 /* UserAuthenticationRemoteAPI.swift in Sources */,
 				9F9F399422AC8219004D2B76 /* SignUpView.swift in Sources */,
+				9F7A842122C7F6A5001FF475 /* SelectDropoffLocationView.swift in Sources */,
 				9F7A841E22C7EA97001FF475 /* LocatingUserView.swift in Sources */,
 				9F9F399E22AC88B1004D2B76 /* OnboardView.swift in Sources */,
 				9FAD7ED822B58FF00050A6B8 /* FullscreenView.swift in Sources */,
