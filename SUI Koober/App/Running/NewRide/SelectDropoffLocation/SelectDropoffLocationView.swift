@@ -28,53 +28,94 @@
 
 import SwiftUI
 
-/// This view is presented if a user is signed in and ready to start a new ride.
-struct NewRideView : View {
-  let userSession: UserSession
+struct SelectDropoffLocationView : View {
+  let locations: [Location] = ["Opera House", "Apple Store", "100 George Street", "MOMA"]
+  @State private var searchQuery = ""
   
   var body: some View {
-    ZStack(alignment: .top) {
-      MapView()
-      HStack(alignment: .bottom) {
-        Spacer()
-        Image(systemName: "person")
-          .font(.title)
-          .padding(.all)
-      }
-      WhereToButton(action: goToDropoffLocationSelectionScreen)
-        .padding(.top, 60)
+    NavigationView {
+      SearchField(searchQuery: $searchQuery)
+      DropoffLocationList(locations: locations, action: select(location:))
+        .navigationBarTitle(Text("Where to?"))
+        .navigationBarItems(leading: CancelButton(action: cancel))
     }
   }
   
-  func goToDropoffLocationSelectionScreen() {
-    // TODO: Navigate to dropoff location selection.
+  func cancel() {
+    // TODO: Implement view dismiss.
+  }
+  
+  func select(location: Location) {
+    // TODO: Implement selection logic.
   }
 }
 
-struct WhereToButton: View {
+struct SearchField: View {
+  @Binding var searchQuery: String
+  
+  var body: some View {
+    ZStack {
+      Color("SearchBackgroundColor")
+      HStack {
+        Image(systemName: "magnifyingglass")
+          .foregroundColor(Color("PlaceholderTextColor"))
+          .padding(.leading, 15)
+        
+        TextField($searchQuery, placeholder: Text("Search").color(Color("PlaceholderTextColor")))
+          .font(.body)
+      }
+      }
+      .frame(maxHeight: 40)
+      .cornerRadius(10)
+      .padding([.leading, .trailing])
+  }
+}
+
+struct DropoffLocationList: View {
+  let locations: [Location]
+  let action: (Location) -> Void
+  
+  var body: some View {
+    List(locations) { location in
+      Button(action: {
+        self.select(location: location)
+      }) {
+        Text(location.name)
+      }
+    }
+  }
+  
+  func select(location: Location) {
+    action(location)
+  }
+  
+}
+
+struct CancelButton: View {
   let action: () -> Void
   
   var body: some View {
     Button(action: action) {
-      Text("Where to?")
-        .color(.black)
-        .padding(EdgeInsets(top: 15, leading: 80, bottom: 15, trailing: 80))
-        .background(Color.white)
-        .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+      Text("Cancel")
     }
   }
 }
 
-struct MapView: View {
-  var body: some View {
-    Color.red
+/// Temporary data structure to populate dropoff location list.
+struct Location: ExpressibleByStringLiteral, Identifiable {
+  var id: String
+  var name: String
+  
+  init(stringLiteral value: String) {
+    self.id = value
+    self.name = value
   }
 }
 
 #if DEBUG
-struct NewRideView_Previews : PreviewProvider {
+struct SelectDropoffLocationView_Previews : PreviewProvider {
   static var previews: some View {
-    NewRideView(userSession: UserSession.fake)
+    SelectDropoffLocationView()
   }
 }
 #endif
