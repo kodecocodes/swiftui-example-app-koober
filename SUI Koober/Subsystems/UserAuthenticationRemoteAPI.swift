@@ -37,7 +37,7 @@ protocol UserAuthenticationRemoteAPI {
   /// - Parameter username: User provided username.
   /// - Parameter password: User provided password.
   /// **Note:** Normally the future's failure type would not be `Never`. In this prototype, a user's username/password is not validated, any username-password pair successfully signs in the user.
-  func signIn(username: String, password: String) -> Publishers.Future<UserSession, SignInError>
+  func signIn(username: String, password: String) -> Future<UserSession, SignInError>
 }
 
 // MARK: - Implementation
@@ -66,8 +66,8 @@ extension SignInError {
 }
 
 class FakeUserAuthenticationRemoteAPI: UserAuthenticationRemoteAPI {
-  func signIn(username: String, password: String) -> Publishers.Future<UserSession, SignInError> {
-    let future = Publishers.Future<UserSession, SignInError> { promise in
+  func signIn(username: String, password: String) -> Future<UserSession, SignInError> {
+    let future = Future<UserSession, SignInError> { promise in
       self.fakeSignIn(promise: promise)
     }
     return future

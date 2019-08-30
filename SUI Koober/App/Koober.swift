@@ -31,17 +31,9 @@ import SwiftUI
 import Combine
 
 /// `Koober` is a state store that holds the app's current state. SwiftUI will be notified anytime _anything_ changes in `appState`. This means all the views are recomputed by SwiftUI whenevr anything changes. Recomputing views is supposed to be cheap. **I haven't profiled taking this strategy so your milage may vary.**
-final class Koober: BindableObject {
-  
-  /// `Publisher` required by `BindableObject` protocol. This publisher gets sent a new `Void` value anytime `appState` changes.
-  private(set) var didChange = PassthroughSubject<Void, Never>()
-  
+final class Koober: ObservableObject {
   /// This is the app's entire state. The SwiftUI view hierarchy is a function of this state.
-  private(set) var appState = AppState.launching {
-    didSet {
-      didChange.send(())
-    }
-  }
+  @Published private(set) var appState = AppState.launching
   
   // MARK: Dependencies
   let kooberDependencyContainer = KooberDependencyContainer()
@@ -85,13 +77,13 @@ final class Koober: BindableObject {
   func startLoadUserSessionUseCase() {
     let userSessionStore = kooberDependencyContainer.userSessionStore
     let _ = userSessionStore.getStoredAuthenticatedUserSession()
-              .sink { userSession in
-                       if let userSession = userSession {
-                         self.appState = .running(.authenticated(userSession))
-                       } else {
-                         self.appState = .running(.unauthenticated)
-                       }
-                    }
+              .sink(receiveCompletion: { completion in}) { userSession in
+                 if let userSession = userSession {
+                   self.appState = .running(.authenticated(userSession))
+                 } else {
+                   self.appState = .running(.unauthenticated)
+                 }
+              }
   }
   
   /// Attempts to sign in a usere with credentials.
@@ -100,7 +92,7 @@ final class Koober: BindableObject {
   func startSignInUseCase(username: String, password: String) {
     let useCase = kooberDependencyContainer
       .makeSignInUseCase(username: username, password: password)
-    let _ = useCase.start().sink { userSession in
+    let _ = useCase.start().sink(receiveCompletion: { completion in}) { userSession in
       self.appState = .running(.authenticated(userSession))
     }
   }

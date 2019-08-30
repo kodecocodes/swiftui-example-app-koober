@@ -37,9 +37,9 @@ struct UserProfileView : View {
         UserProfileSection(user: user)
         SignOutSection(signOutAction: signOut)
       }
-      .listStyle(.grouped)
-      .navigationBarTitle(Text(user.displayName))
-        .navigationBarItems(trailing: DoneButton(action: exit))
+      .listStyle(GroupedListStyle())
+      .navigationBarTitle(user.displayName)
+      .navigationBarItems(trailing: DoneButton(action: exit))
     }
   }
   
@@ -99,7 +99,7 @@ private struct SignOutButton: View {
   
   var body: some View {
     Button(action: action) {
-      Text("Sign Out").color(.red)
+      Text("Sign Out").foregroundColor(.red)
     }
   }
 }

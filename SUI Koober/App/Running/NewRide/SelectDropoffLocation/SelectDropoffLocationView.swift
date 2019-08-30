@@ -59,15 +59,16 @@ struct SearchField: View {
       HStack {
         Image(systemName: "magnifyingglass")
           .foregroundColor(Color("PlaceholderTextColor"))
-          .padding(.leading, 15)
-        
-        TextField($searchQuery, placeholder: Text("Search").color(Color("PlaceholderTextColor")))
+          .padding(.leading, CGFloat(15))
+
+        // .foregroundColor(Color("PlaceholderTextColor"))
+        TextField("Search", text: $searchQuery)
           .font(.body)
       }
-      }
-      .frame(maxHeight: 40)
-      .cornerRadius(10)
-      .padding([.leading, .trailing])
+    }
+    .frame(maxHeight: 40)
+    .cornerRadius(10)
+    .padding([.leading, .trailing])
   }
 }
 

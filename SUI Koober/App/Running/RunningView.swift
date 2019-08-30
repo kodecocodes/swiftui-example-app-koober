@@ -31,7 +31,7 @@ import SwiftUI
 /// This view is presented once the app is finished launching and is running.
 struct RunningView : View {
   let userState: UserState
-  @ObjectBinding var koober: Koober
+  @ObservedObject var koober: Koober
   
   var body: some View {
     VStack(content: content)

@@ -36,13 +36,13 @@ struct SignInView : View {
     VStack {
       FormField(viewModel.email) {
         Text("Username")
-          .color(.white)
+          .foregroundColor(.white)
           .frame(width: 80)
           .padding()
       }
       FormField(viewModel.password, secure: true) {
         Text("Password")
-          .color(.white)
+          .foregroundColor(.white)
           .frame(width: 80)
           .padding()
       }
@@ -88,11 +88,11 @@ private struct FormField<Label: View>: View {
     HStack {
       label
       if (secure) {
-        SecureField(text)
+        SecureField("", text: text) // TODO: Add title property to `FormField`.
           .padding()
           .background(Color(hue: 1, saturation: 1, brightness: 1, opacity: 0.1))
       } else {
-        TextField(text)
+        TextField("", text: text) // TODO: Add title property to `FormField`.
           .padding()
           .background(Color(hue: 1, saturation: 1, brightness: 1, opacity: 0.1))
       }

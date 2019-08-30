@@ -30,7 +30,7 @@ import SwiftUI
 
 /// This view welcomes the user and asks the user to either sign in or sign up.
 struct WelcomeView : View {
-  @ObjectBinding var koober: Koober
+  @ObservedObject var koober: Koober
   
   var body: some View {
     VStack {
@@ -54,7 +54,7 @@ struct WelcomeView_Previews : PreviewProvider {
 
 /// App logo, sign in and sign up buttons.
 private struct WelcomeContentView : View {
-  @ObjectBinding var koober: Koober
+  @ObservedObject var koober: Koober
   
   var body: some View {
     VStack {
@@ -67,12 +67,12 @@ private struct WelcomeContentView : View {
 }
 
 private struct SignInSignUpButtons : View {
-  @ObjectBinding var koober: Koober
+  @ObservedObject var koober: Koober
   
   var body: some View {
     HStack {
       
-      NavigationButton(destination: SignInView(viewModel: SignInViewModel(startSignInUseCase: koober.startSignInUseCase))) {
+      NavigationLink(destination: SignInView(viewModel: SignInViewModel(startSignInUseCase: koober.startSignInUseCase))) {
         Text("Sign In")
       }
       .accentColor(.white)
@@ -80,7 +80,7 @@ private struct SignInSignUpButtons : View {
       
       Spacer()
       
-      NavigationButton(destination: SignUpView()) {
+      NavigationLink(destination: SignUpView()) {
         Text("Sign Up")
       }
       .accentColor(.white)

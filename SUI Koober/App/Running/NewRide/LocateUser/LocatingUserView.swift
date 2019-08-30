@@ -36,7 +36,7 @@ struct LocatingUserView : View {
         Image("roo_logo")
         Text("Finding your location...")
           .font(.headline)
-          .color(.white)
+          .foregroundColor(.white)
           .padding(.top)
       }
     }

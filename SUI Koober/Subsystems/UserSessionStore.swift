@@ -33,8 +33,8 @@ import Combine
 
 /// Data store for storing the authenticated user's session.
 protocol UserSessionStore {
-  func getStoredAuthenticatedUserSession() -> Publishers.Future<UserSession?, GetStoredAuthenticatedUserSessionError>
-  func store(_ authenticatedUserSession: UserSession) -> Publishers.Future<UserSession, StoreAuthenticatedUserSessionError>
+  func getStoredAuthenticatedUserSession() -> Future<UserSession?, GetStoredAuthenticatedUserSessionError>
+  func store(_ authenticatedUserSession: UserSession) -> Future<UserSession, StoreAuthenticatedUserSessionError>
 }
 
 protocol UserSessionStoreError: Error, ErrorMessageConvertible {}
@@ -57,8 +57,8 @@ class FakeUserSessionStore: UserSessionStore {
     self.userAlreadySignedIn = userAlreadySignedIn
   }
   
-  func getStoredAuthenticatedUserSession() -> Publishers.Future<UserSession?, GetStoredAuthenticatedUserSessionError> {
-    let future = Publishers.Future<UserSession?, GetStoredAuthenticatedUserSessionError> { promise in
+  func getStoredAuthenticatedUserSession() -> Future<UserSession?, GetStoredAuthenticatedUserSessionError> {
+    let future = Future<UserSession?, GetStoredAuthenticatedUserSessionError> { promise in
       self.getStoredAuthenticatedUserSession(simulatedIOTime: 2, promise: promise)
     }
     return future
@@ -80,8 +80,8 @@ class FakeUserSessionStore: UserSessionStore {
     promise(result)
   }
   
-  func store(_ authenticatedUserSession: UserSession) -> Publishers.Future<UserSession, StoreAuthenticatedUserSessionError> {
-    let future = Publishers.Future<UserSession, StoreAuthenticatedUserSessionError> { promise in
+  func store(_ authenticatedUserSession: UserSession) -> Future<UserSession, StoreAuthenticatedUserSessionError> {
+    let future = Future<UserSession, StoreAuthenticatedUserSessionError> { promise in
       self.store(authenticatedUserSession, simulatedIOTime: 2, promise: promise)
     }
     return future

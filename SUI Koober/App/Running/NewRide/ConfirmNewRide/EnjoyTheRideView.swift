@@ -73,7 +73,7 @@ private struct StartNewRideButton: View {
     Button(action: action) {
       Text("Start New Ride")
         .font(.headline)
-        .color(.white)
+        .foregroundColor(.white)
       }
       .frame(minWidth: 80, idealWidth: 200, maxWidth: .infinity,
              minHeight: 54, maxHeight: 54)
