@@ -38,8 +38,6 @@ final class Koober: ObservableObject {
   // MARK: Dependencies
   let kooberDependencyContainer = KooberDependencyContainer()
   
-  var future: AnyCancellable?
-  
   // MARK: Computed properties
   /// Helper computed property used by SwiftUI views.
   var isLaunching: Bool {
