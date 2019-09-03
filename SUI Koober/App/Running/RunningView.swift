@@ -50,7 +50,7 @@ struct RunningView : View {
 #if DEBUG
 struct RunningView_Previews : PreviewProvider {
   static var previews: some View {
-    RunningView(userState: .unauthenticated, koober: Koober())
+    RunningView(userState: .unauthenticated(.idle), koober: Koober())
   }
 }
 #endif
