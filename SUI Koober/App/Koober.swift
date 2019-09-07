@@ -31,17 +31,9 @@ import SwiftUI
 import Combine
 
 /// `Koober` is a state store that holds the app's current state. SwiftUI will be notified anytime _anything_ changes in `appState`. This means all the views are recomputed by SwiftUI whenevr anything changes. Recomputing views is supposed to be cheap. **I haven't profiled taking this strategy so your milage may vary.**
-final class Koober: BindableObject {
-  
-  /// `Publisher` required by `BindableObject` protocol. This publisher gets sent a new `Void` value anytime `appState` changes.
-  private(set) var didChange = PassthroughSubject<Void, Never>()
-  
+final class Koober: ObservableObject {
   /// This is the app's entire state. The SwiftUI view hierarchy is a function of this state.
-  private(set) var appState = AppState.launching {
-    didSet {
-      didChange.send(())
-    }
-  }
+  @Published private(set) var appState = AppState.launching(.starting)
   
   // MARK: Dependencies
   let kooberDependencyContainer = KooberDependencyContainer()
@@ -49,7 +41,7 @@ final class Koober: BindableObject {
   // MARK: Computed properties
   /// Helper computed property used by SwiftUI views.
   var isLaunching: Bool {
-    return appState == .launching
+    return appState == .launching(.starting)
   }
   
   /// Helper computed property used by SwiftUI views.
@@ -84,14 +76,15 @@ final class Koober: BindableObject {
   /// Determines if user is signed in when app launches.
   func startLoadUserSessionUseCase() {
     let userSessionStore = kooberDependencyContainer.userSessionStore
-    let _ = userSessionStore.getStoredAuthenticatedUserSession()
-              .sink { userSession in
-                       if let userSession = userSession {
-                         self.appState = .running(.authenticated(userSession))
-                       } else {
-                         self.appState = .running(.unauthenticated)
-                       }
-                    }
+    let anyCancellable = userSessionStore.getStoredAuthenticatedUserSession()
+                          .sink(receiveCompletion: { completion in }) { userSession in
+                              if let userSession = userSession {
+                                self.appState = .running(.authenticated(userSession))
+                              } else {
+                                self.appState = .running(.unauthenticated(.idle))
+                              }
+                           }
+    appState = .launching(.loadingUserSession(anyCancellable))
   }
   
   /// Attempts to sign in a usere with credentials.
@@ -100,23 +93,35 @@ final class Koober: BindableObject {
   func startSignInUseCase(username: String, password: String) {
     let useCase = kooberDependencyContainer
       .makeSignInUseCase(username: username, password: password)
-    let _ = useCase.start().sink { userSession in
+    let anyCancellable = useCase.start().sink(receiveCompletion: { completion in}) { userSession in
       self.appState = .running(.authenticated(userSession))
     }
+    appState = .running(.unauthenticated(.signingIn(anyCancellable)))
   }
 }
 
 // MARK: - Model
 
 enum AppState: Equatable {
-  case launching
+  case launching(LaunchState)
   case running(UserState)
+}
+
+enum LaunchState: Equatable {
+  case starting
+  case loadingUserSession(AnyCancellable)
 }
 
 /// Represents whether user is signed in or not. In a complete implemnetation, the `authenticated` case would hold a `UserSession` as an associated value.
 enum UserState: Equatable {
-  case unauthenticated
+  case unauthenticated(UnauthenticatedState)
   case authenticated(UserSession)
+}
+
+enum UnauthenticatedState: Equatable {
+  case idle
+  case signingIn(AnyCancellable)
+  case signingUp(AnyCancellable)
 }
 
 /// Placeholder. This type would normally hold the signed in user's information and auth token.

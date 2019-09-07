@@ -57,7 +57,7 @@ struct WhereToButton: View {
   var body: some View {
     Button(action: action) {
       Text("Where to?")
-        .color(.black)
+        .foregroundColor(.black)
         .padding(EdgeInsets(top: 15, leading: 80, bottom: 15, trailing: 80))
         .background(Color.white)
         .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)

@@ -30,7 +30,7 @@ import SwiftUI
 
 /// This view is presented when a user is not signed in.
 struct OnboardView : View {
-  @ObjectBinding var koober: Koober
+  @ObservedObject var koober: Koober
   
   var body: some View {
     NavigationView {

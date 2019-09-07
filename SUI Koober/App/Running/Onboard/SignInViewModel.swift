@@ -52,11 +52,11 @@ final class SignInViewModel {
 extension SignInViewModel: SignInViewModelProtocol {
   
   var email: Binding<String> {
-    return .init(getValue: { self._email }, setValue: { self._email = $0 })
+    return .init(get: { self._email }, set: { self._email = $0 })
   }
   
   var password: Binding<String> {
-    return .init(getValue: { self._password }, setValue: { self._password = $0 })
+    return .init(get: { self._password }, set: { self._password = $0 })
   }
   
   func signIn() {
